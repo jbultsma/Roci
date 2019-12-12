@@ -1,0 +1,62 @@
+﻿
+@model IEnumerable<Rocinante.Models.Job>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">My jobs</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    @Html.DisplayFor(modelItem => item.SavedDate)
+    </p>*@
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="card-group shadow" style="width: 20rem">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="@item.Link)">@item.Title</a></h5>
+                        <p>@item.Company</p>
+                        <p class="card-text">@Html.Raw(item.Snippet)</p>
+                        <p><small class="text-muted">@item.Location</small></p>
+                        <p><small class="text-muted">@item.SavedDate</small></p>
+                        @{
+                            var days = int.Parse(DateTime.Now.Subtract(Convert.ToDateTime(@item.Updated)).Days.ToString());
+                            if (days == 0)
+                            {
+                                <p><small class="text-muted">Posted  To day</small></p>
+                            }
+                            else if (days == 1)
+                            {
+                                <p><small class="text-muted">Posted yesterday</small></p>
+                            }
+                            else if (days >= 31)
+                            {
+                                <p><small class="text-muted">Posted +31 days ago</small></p>
+                            }
+                            else
+                            {
+                                <p><small class="text-muted">Posted  @days days ago</small></p>
+                            }
+                        }
+
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        }
+
+    </div>
+    <div class="clearfix visible-md"></div>
+</div>
+
